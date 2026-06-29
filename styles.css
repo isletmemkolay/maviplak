@@ -214,7 +214,7 @@ body {
     0 1px 1px rgba(255, 255, 255, 0.1);
   
   /* DIŞ HALKAYI 1.5 KATINA ÇIKARIR */
-  scale: 1.5;
+  scale: 1.2;
   /* Büyümeden kaynaklı altındaki/üstündeki elemanlara taşmayı önlemek için opsiyonel margin */
   margin: 10px 0; 
 }
