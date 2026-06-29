@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#07090e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Pikap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <main class="player-stage">
+      <div class="turntable-base" id="turntable">
+
+        <!-- İşlevsel Döner Ses Düğmesi - Sol Üst Köşe -->
+        <div class="volume-knob-wrapper" id="volume-knob-wrapper">
+          <div class="knob-label">SES</div>
+          <div class="knob-surround">
+            <div class="knob" id="volumeKnob"></div>
+          </div>
+          <div class="knob-status" id="knob-status">OFF</div>
+        </div>
+
+        <!-- Pikap İğnesi - Sağ Üst Köşe -->
+        <button
+          type="button"
+          class="tonearm-pivot"
+          id="tonearm-pivot"
+          aria-label="Plak iğnesine dokun"
+          aria-pressed="false"
+        >
+          <svg class="tonearm-svg" viewBox="0 0 180 260" aria-hidden="true">
+            <defs>
+              <linearGradient id="armGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4a505c"/>
+                <stop offset="40%" stop-color="#2a2f38"/>
+                <stop offset="100%" stop-color="#14161c"/>
+              </linearGradient>
+              <linearGradient id="counterweightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5a606c"/>
+                <stop offset="50%" stop-color="#2e333d"/>
+                <stop offset="100%" stop-color="#181a20"/>
+              </linearGradient>
+              <linearGradient id="headshellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#22252d"/>
+                <stop offset="100%" stop-color="#0f1115"/>
+              </linearGradient>
+              <filter id="armShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.7"/>
+              </filter>
+            </defs>
+
+            <!-- Ana Gövde / Pivot Yatağı -->
+            <circle cx="90" cy="30" r="28" fill="#1a1d24" stroke="#2a2f38" stroke-width="2" filter="url(#armShadow)"/>
+            <circle cx="90" cy="30" r="18" fill="#0d0f12" stroke="#3a3f4a" stroke-width="1"/>
+
+            <!-- Ağırlık (Counterweight) -->
+            <rect x="70" y="4" width="40" height="52" rx="5" fill="url(#counterweightGrad)" filter="url(#armShadow)"/>
+            <rect x="76" y="10" width="28" height="40" rx="3" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <line x1="78" y1="18" x2="102" y2="18" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="78" y1="26" x2="102" y2="26" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="78" y1="34" x2="102" y2="34" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="78" y1="42" x2="102" y2="42" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+            <!-- Kol -->
+            <rect x="86" y="54" width="8" height="140" rx="4" fill="url(#armGrad)" filter="url(#armShadow)"/>
+
+            <!-- Başlık (Headshell) -->
+            <path d="M76 190 L104 190 L110 224 L70 224 Z" fill="url(#headshellGrad)" filter="url(#armShadow)"/>
+            <rect x="78" y="192" width="24" height="28" rx="2" fill="#0a0c0f"/>
+
+            <!-- İğne (Stylus) -->
+            <line x1="90" y1="224" x2="90" y2="240" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="90" cy="243" r="4" fill="#e8d48b"/>
+            <circle cx="90" cy="248" r="2" fill="#c9a227"/>
+
+            <!-- Tıklama alanı -->
+            <circle cx="90" cy="130" r="45" class="stylus-hit" fill="transparent"/>
+          </svg>
+        </button>
+
+        <!-- Plak Tepsisi -->
+        <div class="platter-ring" aria-hidden="true"></div>
+
+        <!-- Plak -->
+        <div class="vinyl-disc" id="vinyl">
+          <div class="vinyl-grooves" aria-hidden="true"></div>
+          <div class="vinyl-shine" aria-hidden="true"></div>
+          <div class="vinyl-label">
+            <img id="cover" src="" alt="" width="300" height="300">
+          </div>
+          <div class="spindle" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Parça Bilgisi -->
+      <div class="track-info" id="track-info">
+        <p class="track-artist" id="artist-name"></p>
+        <h1 class="track-song" id="song-title"></h1>
+      </div>
+    </main>
+  </div>
+
+  <!-- Gizli YouTube Player -->
+  <div id="yt-player" class="yt-player" aria-hidden="true"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="playlist.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
