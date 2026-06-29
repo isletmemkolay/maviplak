@@ -212,6 +212,11 @@ body {
   box-shadow:
     inset 0 3px 8px rgba(0, 0, 0, 0.8),
     0 1px 1px rgba(255, 255, 255, 0.1);
+  
+  /* DIŞ HALKAYI 1.5 KATINA ÇIKARIR */
+  scale: 1.5;
+  /* Büyümeden kaynaklı altındaki/üstündeki elemanlara taşmayı önlemek için opsiyonel margin */
+  margin: 10px 0; 
 }
 
 .knob {
@@ -224,6 +229,10 @@ body {
     0 4px 10px rgba(0, 0, 0, 0.6),
     inset 0 2px 3px rgba(255, 255, 255, 0.2);
   cursor: grab;
+  
+  /* İÇ DÜĞMEYİ DE 1.5 KATINA ÇIKARIR */
+  scale: 1.5;
+  
   transform: rotate(-135deg);
   transition: transform 0.05s ease-out, box-shadow 0.2s ease;
   will-change: transform;
@@ -279,7 +288,6 @@ body {
   color: var(--knob-on);
   text-shadow: 0 0 6px rgba(76, 217, 100, 0.4);
 }
-
 /* ── Tonearm - Sağ Üst Köşe ───────────────────────────────── */
 .tonearm-pivot {
   position: absolute;
