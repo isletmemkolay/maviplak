@@ -186,108 +186,222 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 6px; /* Mekanik parçalar arası boşluk biraz artırıldı */
   user-select: none;
   pointer-events: auto;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .knob-label {
-  font-size: 0.5rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(229, 231, 230, 0.35);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: rgba(229, 231, 230, 0.4);
+  text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.1); /* Oyma efekti */
 }
 
+/* Düğmenin içine oturduğu mekanik metal yuva (Bezel) */
 .knob-surround {
   position: relative;
-  width: clamp(44px, 12vw, 56px);
-  height: clamp(44px, 12vw, 56px);
+  width: clamp(46px, 13vw, 58px);
+  height: clamp(46px, 13vw, 58px);
   border-radius: 50%;
-  background: #121214;
+  /* Ağır metal şasi hissi veren dış halka gradyanı */
+  background: linear-gradient(135deg, #1a1a1c 0%, #2a2a2e 40%, #121214 70%, #222226 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow:
-    inset 0 3px 8px rgba(0, 0, 0, 0.8),
-    0 1px 1px rgba(255, 255, 255, 0.1);
-  
-  /* DIŞ HALKAYI 1.5 KATINA ÇIKARIR */
-  scale: 1.2;
-  /* Büyümeden kaynaklı altındaki/üstündeki elemanlara taşmayı önlemek için opsiyonel margin */
-  margin: 10px 0; 
+    inset 0 2px 5px rgba(0, 0, 0, 0.8),
+    inset 0 -2px 3px rgba(255, 255, 255, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 1px 0px rgba(255, 255, 255, 0.1); /* Dış çeper kesim çizgisi */
 }
 
+/* Fırçalanmış alüminyum/metal döner düğme */
 .knob {
   position: absolute;
   width: clamp(34px, 9vw, 44px);
   height: clamp(34px, 9vw, 44px);
   border-radius: 50%;
-  background: linear-gradient(145deg, #3a3a45, #1e1e23);
+  /* Conic gradient ile fırçalanmış metal (brushed alüminyum) yansıması */
+  background: conic-gradient(
+    from 0deg,
+    #4a4a52 0deg,
+    #2c2c32 45deg,
+    #63636c 90deg,
+    #2c2c32 135deg,
+    #4a4a52 180deg,
+    #2c2c32 225deg,
+    #63636c 270deg,
+    #2c2c32 315deg,
+    #4a4a52 360deg
+  );
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.6),
-    inset 0 2px 3px rgba(255, 255, 255, 0.2);
+    0 6px 12px rgba(0, 0, 0, 0.5), /* Gerçekçi düşen gölge */
+    inset 0 1px 1px rgba(255, 255, 255, 0.3), /* Metalik üst kenar parlaması */
+    inset 0 -2px 5px rgba(0, 0, 0, 0.6); /* Derinlik veren alt gölge */
   cursor: grab;
-  
-  /* İÇ DÜĞMEYİ DE 1.5 KATINA ÇIKARIR */
-  scale: 1.5;
-  
   transform: rotate(-135deg);
   transition: transform 0.05s ease-out, box-shadow 0.2s ease;
   will-change: transform;
 }
 
-.knob:active {
-  cursor: grabbing;
+/* Düğmenin kenarındaki mekanik tırtıklar (Knurling efekti) */
+.knob::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg 2deg,
+    rgba(0, 0, 0, 0.25) 2deg 4deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 88%, black 89%);
+  mask: radial-gradient(circle, transparent 88%, black 89%);
 }
 
-/* Düğme üzerindeki çizgi işaretçi */
+.knob:active {
+  cursor: grabbing;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.6), /* Basılınca gölge daralır */
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Düğme üzerindeki fiziksel oyuk çizgi işaretçi */
 .knob::after {
   content: '';
   position: absolute;
-  top: 10%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
-  width: 2.5px;
-  height: 22%;
-  background-color: var(--knob-off);
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(255, 59, 48, 0.8);
+  width: 3px;
+  height: 20%;
+  background-color: #1a1a1a; /* Fiziksel oyuk tabanı */
+  border-radius: 1px;
+  box-shadow: 
+    inset 0 1px 2px rgba(0,0,0,0.8),
+    0 1px 0px rgba(255,255,255,0.15);
   transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-/* Düğme ON olduğunda işaretçi yeşil yanar */
+/* Düğme ON olduğunda lazer/LED aydınlatmalı oyuk efekti */
 .knob.on::after {
-  background-color: var(--knob-on);
-  box-shadow: 0 0 10px rgba(76, 217, 100, 1);
+  background-color: var(--knob-on, #4cd964);
+  box-shadow: 
+    0 0 8px var(--knob-on, #4cd964),
+    0 0 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Düğme devre dışı (iğne plakta değil) */
+/* Düğme devre dışı */
 .knob.disabled {
   cursor: not-allowed;
-  opacity: 0.4;
+  opacity: 0.5;
+  filter: grayscale(1);
 }
 
 .knob.disabled::after {
-  background-color: var(--knob-disabled);
+  background-color: #333;
   box-shadow: none;
 }
 
 .knob-status {
+  font-family: 'Senin-Yeni-Fontun', monospace; /* 👈 Fontu buraya yazabilirsiniz (Örn: 'Orbitron', 'Courier New', monospace vb.) */
   font-size: 0.5rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--knob-off);
+  color: var(--knob-off, #ff3b30);
   transition: color 0.3s, text-shadow 0.3s;
   min-height: 1em;
+  
+  /* Mekanik dijital panel göstergesi efekti (Eksik kalan kısım) */
+  background: #0d0d0f;
+  padding: 2px 6px;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Aktif (Açık) olduğundaki LED ışıma efekti */
+.knob-status.on {
+  color: var(--knob-on, #4cd964);
+  text-shadow: 0 0 8px rgba(76, 217, 100, 0.6);
+}
+  /* Dijital panel göstergesi efekti */
+  background: #0d0d0f;
+  padding: 2px 6px;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.9), 0 1px 0 rgba(255,255,255,0.05);
 }
 
 .knob-status.on {
-  color: var(--knob-on);
-  text-shadow: 0 0 6px rgba(76, 217, 100, 0.4);
+  color: var(--knob-on, #4cd964);
+  text-shadow: 0 0 8px rgba(76, 217, 100, 0.6);
 }
+
+/* ── Tonearm (Pikap Kolu) - Sağ Üst Köşe ───────────────────────────────── */
+.tonearm-pivot {
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  z-index: 20;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transform-origin: 50% 8%;
+  will-change: transform;
+  transform: rotate(-18deg) translateZ(0);
+  /* Mekanik ağırlığı hissettiren daha derin katmanlı gölge */
+  filter: 
+    drop-shadow(6px 12px 10px rgba(0, 0, 0, 0.5))
+    drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.3));
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Kol hareketine mekanik sönümleme (damping) yumuşaklığı */
+}
+
+.tonearm-pivot:focus-visible {
+  outline: 2px solid rgba(119, 141, 169, 0.55);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.tonearm-pivot:disabled {
+  pointer-events: none;
+}
+
+.tonearm-svg {
+  display: block;
+  width: clamp(80px, 24vw, 110px);
+  height: auto;
+}
+
+/* İğne plağa değdiğinde (Stylus mekanizması) */
+.stylus-hit {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+/* Mekanik parça parlaması yerine endüstriyel mikro LED gösterge parlaması */
+.tonearm-pivot.is-on-record .stylus-hit {
+  animation: stylus-glow 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes stylus-glow {
+  0%, 100% { 
+    fill: rgba(255, 59, 48, 0.2);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  50% { 
+    fill: var(--accent-glow, #ff3b30);
+    filter: drop-shadow(0 0 4px var(--accent-glow, #ff3b30));
+  }
+}
+
 /* ── Tonearm - Sağ Üst Köşe ───────────────────────────────── */
 .tonearm-pivot {
   position: absolute;
