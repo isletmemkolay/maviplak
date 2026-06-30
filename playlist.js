@@ -31,9 +31,15 @@ const playlist = {
     youtube: '89PepdEhKCM',
     bg: 'linear-gradient(135deg, #3a5471 0%, #172131 100%)',
   },
+  '7c3a9d2b4f1e8e6b': {
+  song: 'Aşk Dediğin Laftır',
+  artist: 'Gökben',
+  youtube: 'LzJ6VxPeKI8',
+  bg: 'linear-gradient(135deg, #3a5471 0%, #172131 100%)',
+},
 };
 
-const DEFAULT_ID = '8f2c91a4b6d0e3f5';
+const DEFAULT_ID = '7c3a9d2b4f1e8e6b';
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { playlist, DEFAULT_ID };
